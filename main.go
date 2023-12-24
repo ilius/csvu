@@ -11,7 +11,7 @@ import (
 )
 
 // DELIMITER holds a string to delimition.
-const DELIMITER = " "
+var DELIMITER = " "
 
 func main() {
 	delimFlag := flag.String(
@@ -19,8 +19,14 @@ func main() {
 		",",
 		"-delim='|'",
 	)
-
+	outDelimFlag := flag.String(
+		"out-delim",
+		" ",
+		"-out-delim='  '",
+	)
 	flag.Parse()
+
+	DELIMITER = *outDelimFlag
 
 	fp := readStdin(flag.Args())
 
