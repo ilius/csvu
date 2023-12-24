@@ -10,7 +10,7 @@ Just read "cs-view".
 If you have the environment for Golang development, just do the following:
 
 ```bash
-go get github.com/hachi8833/csvu
+go get github.com/ilius/csvu
 ```
 
 ## Usage

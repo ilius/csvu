@@ -1,4 +1,4 @@
-module github.com/hachi8833/csvu
+module github.com/ilius/csvu
 
 go 1.12
 
