@@ -2,21 +2,35 @@ package main
 
 import (
 	"encoding/csv"
+	"flag"
 	"fmt"
-	"github.com/logrusorgru/aurora"
 	"io"
 	"os"
+
+	"github.com/logrusorgru/aurora"
 )
 
 // DELIMITER holds a string to delimition.
 const DELIMITER = " "
 
 func main() {
+	delimFlag := flag.String(
+		"delim",
+		",",
+		"-delim='|'",
+	)
 
-	fp := readStdin()
+	flag.Parse()
+
+	fp := readStdin(flag.Args())
+
+	delim := []rune(*delimFlag)
+	if len(delim) > 1 {
+		panic("delimeter must be one character")
+	}
 
 	reader := csv.NewReader(fp)
-	reader.Comma = ','
+	reader.Comma = delim[0]
 	reader.LazyQuotes = true
 
 	for {
@@ -55,13 +69,13 @@ func rotateColor(i int, col interface{}) {
 }
 
 // readStdin returns the CSV from stdin.
-func readStdin() *os.File {
+func readStdin(args []string) *os.File {
 	var fp *os.File
-	if len(os.Args) < 2 {
+	if len(args) < 2 {
 		fp = os.Stdin
 	} else {
 		var err error
-		fp, err = os.Open(os.Args[1])
+		fp, err = os.Open(args[1])
 		if err != nil {
 			panic(err)
 		}
